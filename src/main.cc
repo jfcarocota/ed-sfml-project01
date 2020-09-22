@@ -3,7 +3,6 @@
 
 #include "Inputs.hh"
 #include "Character.hh"
-#include "Animation.hh"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -35,7 +34,16 @@ int main()
     tilesTexture2->loadFromFile(TILES2);
 
     Character* character1{new Character(tilesTexture2, 16 * 1, 16 * 5, 16, 16, SPRITE_SCALE, SPRITE_SCALE)};
-    Animation* idle{new Animation(0, 5, character1->GetSprite(), 40.f)};
+    character1->SetAnimations(
+        new Animation*[2]
+        {
+            new Animation(5, 0, 5, character1->GetSprite(), 40.f),
+            new Animation(6, 0, 5, character1->GetSprite(), 80.f)
+        }
+    );
+
+    //Animation* idle{new Animation(5, 0, 5, character1->GetSprite(), 40.f)};
+    //Animation* run{new Animation(6, 0, 5, character1->GetSprite(), 80.f)};
 
     /*sf::RectangleShape* boxShape{new sf::RectangleShape(*(new sf::Vector2f(100, 100)))};
     boxShape->setPosition((WINDOW_WIDTH / 2), WINDOW_HEIGHT / 2);
@@ -68,14 +76,37 @@ int main()
         {
             character1->GetSprite()->move(joystickAxis->x * deltaTime * PLAYER_MOVESPEED, joystickAxis->y * deltaTime * PLAYER_MOVESPEED);
             character1->FlipSpriteX(joystickAxis->x);
+            
+            if(std::abs(joystickAxis->x) > 0 || std::abs(joystickAxis->y) > 0)
+            {
+                //run
+                character1->GetAnimation(1)->Play(deltaTime);
+            }
+            else
+            {
+                //idle
+                character1->GetAnimation(0)->Play(deltaTime);
+            }
         }
         else
         {
             character1->GetSprite()->move(keyboardAxis->x * deltaTime * PLAYER_MOVESPEED, keyboardAxis->y * deltaTime * PLAYER_MOVESPEED);
             character1->FlipSpriteX(keyboardAxis->x);
+
+            if(std::abs(keyboardAxis->x) > 0 || std::abs(keyboardAxis->y) > 0)
+            {
+                //run
+                character1->GetAnimation(1)->Play(deltaTime);
+            }
+            else
+            {
+                //idle
+                character1->GetAnimation(0)->Play(deltaTime);
+            }
         }
 
-        idle->Play(deltaTime);
+        //character1->GetAnimation(0)->Play(deltaTime);
+
 
         window->clear(*(new sf::Color(150, 100, 0, 255)));//lipiar la pantalla
 
