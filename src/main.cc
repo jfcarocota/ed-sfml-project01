@@ -43,47 +43,36 @@ int main()
 
     sf::Sprite* tileWall_1_2{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 2, 16, 16)))};
     tileWall_1_2->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileWall_1_2->move(tileBaseWidth * 1, tileWall_1_2->getPosition().y);
     
     sf::Sprite* tileWall_1_3{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 3, 16, 16)))};
     tileWall_1_3->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileWall_1_3->move(tileBaseWidth * 2, tileWall_1_3->getPosition().y);
 
     sf::Sprite* tileGround_1_4{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 4, 16, 16)))};
     tileGround_1_4->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_1_4->move(tileWall_1_3->getPosition().y, tileBaseHeight);
 
     sf::Sprite* tileGround_2_4{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 2, 16 * 4, 16, 16)))};
     tileGround_2_4->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_2_4->move(tileBaseWidth * 1, tileBaseHeight);
 
     sf::Sprite* tileGround_3_4{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 3, 16 * 4, 16, 16)))};
     tileGround_3_4->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_3_4->move(tileBaseWidth * 2, tileBaseHeight);
 
     sf::Sprite* tileGround_1_5{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 5, 16, 16)))};
     tileGround_1_5->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_1_5->move(tileGround_1_5->getPosition().x, tileBaseHeight * 2);
 
     sf::Sprite* tileGround_2_5{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 2, 16 * 5, 16, 16)))};
     tileGround_2_5->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_2_5->move(tileBaseWidth * 1, tileBaseHeight * 2);
 
     sf::Sprite* tileGround_3_5{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 3, 16 * 5, 16, 16)))};
     tileGround_3_5->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_3_5->move(tileBaseWidth * 2, tileBaseHeight * 2);
 
     sf::Sprite* tileGround_1_6{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 6, 16, 16)))};
     tileGround_1_6->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_1_6->move(tileGround_1_6->getPosition().x, tileBaseHeight * 3);
 
     sf::Sprite* tileGround_2_6{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 2, 16 * 6, 16, 16)))};
     tileGround_2_6->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_2_6->move(tileBaseWidth * 1, tileBaseHeight * 3);
 
     sf::Sprite* tileGround_3_6{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 3, 16 * 6, 16, 16)))};
     tileGround_3_6->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    //tileGround_3_6->move(tileBaseWidth * 2, tileBaseHeight * 3);
 
     //w = tileWall_1_1  q = tileWall_1_2    e =  tileWall_1_3   
 
@@ -110,28 +99,21 @@ int main()
             {
                 case 'w':
                     maze.push_back(*tileWall_1_1);
-                    //maze.back().move(tileBaseWidth * j, tileBaseHeight * i);
-                    //tileWall_1_1->move(tileBaseWidth * j, tileBaseHeight * i);
                     break;
                 case 'q':
                     maze.push_back(*tileWall_1_2);
-                    //tileWall_1_2->move(tileBaseWidth * j, tileBaseHeight * i);
                     break;
                 case 'e':
                     maze.push_back(*tileWall_1_3);
-                    //tileWall_1_3->move(tileBaseWidth * j, tileBaseHeight * i);
                     break;
                 case 'g':
                     maze.push_back(*tileGround_1_4);
-                    //tileGround_1_4->move(tileBaseWidth * j, tileBaseHeight * i);
                     break;
                 case 'f':
                     maze.push_back(*tileGround_2_4);
-                    //tileGround_2_4->move(tileBaseWidth * j, tileBaseHeight * i);
                     break;
                 case 'd':
                     maze.push_back(*tileGround_3_4);
-                    //tileGround_3_4->move(tileBaseWidth * j, tileBaseHeight * i);
                     break;                
                 default:
                     break;
@@ -203,22 +185,6 @@ int main()
         }
 
         window->clear(*(new sf::Color(150, 100, 0, 255)));//lipiar la pantalla
-
-        /*window->draw(*tileWall_1_1);
-        window->draw(*tileWall_1_2);
-        window->draw(*tileWall_1_3);
-
-        window->draw(*tileGround_1_4);
-        window->draw(*tileGround_2_4);
-        window->draw(*tileGround_3_4);
-
-        window->draw(*tileGround_1_5);
-        window->draw(*tileGround_2_5);
-        window->draw(*tileGround_3_5);
-
-        window->draw(*tileGround_1_6);
-        window->draw(*tileGround_2_6);
-        window->draw(*tileGround_3_6);*/
 
         for(auto& mazeTile : maze)
         {
