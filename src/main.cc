@@ -3,6 +3,7 @@
 
 #include "Inputs.hh"
 #include "Character.hh"
+#include "BoxCollider.hh"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -78,20 +79,32 @@ int main()
 
     //g = tileGround_1_4    f = tileGround_2_4  d = tileGround_3_4
 
+    //a = tileGround_1_5    s = tileGround_2_5  z = tileGround_3_5
+
+    //x = tileGround_1_6    c = tileGround_2_6  v = tileGround_3_6
+
     char** tiles 
     {
-        new char*[2]
+        new char*[10]
         {
-            new char[12]{'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e'},
-            new char[12]{'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd'}
+            new char[13]{'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e', 'w'},
+            new char[13]{'g', 'g', 'd', 'g', 'f', 'g', 'g', 'f', 'd', 'g', 'f', 'd', 'g'},
+            new char[13]{'g', 'g', 'd', 'g', 'g', 'x', 'g', 'f', 'g', 'g', 'f', 'c', 'g'},
+            new char[13]{'g', 'g', 'd', 'g', 'g', 'd', 'g', 'g', 'd', 'g', 'g', 'd', 'g'},
+            new char[13]{'z', 'g', 'g', 'g', 'g', 'z', 'g', 'g', 'd', 'g', 'g', 'x', 'g'},
+            new char[13]{'g', 'g', 'g', 'g', 'g', 'd', 'g', 'g', 'd', 'g', 'f', 'g', 'g'},
+            new char[13]{'g', 'f', 'd', 's', 'f', 'd', 'g', 'f', 'g', 'g', 'f', 'd', 'g'},
+            new char[13]{'g', 'a', 'x', 'g', 'f', 'g', 'g', 'g', 'g', 'g', 'v', 'g', 'g'},
+            new char[13]{'g', 'f', 'g', 'g', 'f', 'g', 'g', 'f', 'd', 'g', 'f', 'd', 'g'},
+            new char[13]{'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g'}
         }
     };
 
     std::vector<sf::Sprite> maze;
 
-    for(int i = 0; i < 2; i++)
+    for(int i = 0; i < 10; i++)
     {
-        for(int j = 0; j < 12; j++)
+        for(int j = 0; j < 13; j++)
         {
             char& tile = *(*(tiles + i) + j);
 
@@ -114,7 +127,25 @@ int main()
                     break;
                 case 'd':
                     maze.push_back(*tileGround_3_4);
-                    break;                
+                    break;    
+                case 'a':
+                    maze.push_back(*tileGround_1_5);
+                    break;
+                case 's':
+                    maze.push_back(*tileGround_2_5);
+                    break;
+                case 'z':
+                    maze.push_back(*tileGround_3_5);
+                    break;
+                case 'x':
+                    maze.push_back(*tileGround_1_6);
+                    break;
+                case 'c':
+                    maze.push_back(*tileGround_2_6);
+                    break;
+                case 'v':
+                    maze.push_back(*tileGround_3_6);
+                    break;              
                 default:
                     break;
             }
@@ -133,6 +164,9 @@ int main()
     );
 
     character1->GetSprite()->setPosition(400, 300);
+
+    BoxCollider* character1Collider = new BoxCollider(400, 300, new sf::Color(0, 255, 0, 255), 16, 16);
+    character1Collider->GetBoxShape()->setScale(SPRITE_SCALE, SPRITE_SCALE);
 
     //esto es el loop principal, mientras la ventana este abierta, esto se va ejecutar.
     while (window->isOpen())
@@ -190,9 +224,11 @@ int main()
         {
             window->draw(mazeTile);
         }
+
+        character1Collider->GetBoxShape()->setPosition(character1->GetSprite()->getPosition());
         
         window->draw(*character1->GetSprite());
-        
+        window->draw(*character1Collider->GetBoxShape());
         window->display(); //mostrar en pantalla lo que se va dibujar
 
         sf::Time timeElapsed = clock->getElapsedTime();
