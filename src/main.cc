@@ -1,5 +1,6 @@
 #include<iostream>
 #include <SFML/Graphics.hpp>
+#include<box2d/box2d.h>
 
 #include "Inputs.hh"
 #include "Character.hh"
@@ -39,6 +40,8 @@ int main()
     const float tileBaseWidth{16 * SPRITE_SCALE};
     const float tileBaseHeight{16 * SPRITE_SCALE};
 
+    //Tiles
+
     sf::Sprite* tileWall_1_1{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 1, 16, 16)))};
     tileWall_1_1->setScale(SPRITE_SCALE, SPRITE_SCALE);
 
@@ -75,6 +78,21 @@ int main()
     sf::Sprite* tileGround_3_6{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 3, 16 * 6, 16, 16)))};
     tileGround_3_6->setScale(SPRITE_SCALE, SPRITE_SCALE);
 
+    //Items
+    sf::Sprite* treasureSprite{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 19, 16 * 19, 16, 16)))};
+    treasureSprite->setScale(SPRITE_SCALE, SPRITE_SCALE);
+    treasureSprite->setPosition(300, 250);
+
+    BoxCollider* treasureCollider = new BoxCollider(300, 250, new sf::Color(0, 255, 0, 255), 16, 16);
+    treasureCollider->GetBoxShape()->setScale(SPRITE_SCALE, SPRITE_SCALE);
+
+    treasureCollider->GetBoxShape()->setPosition(treasureSprite->getPosition());
+
+    /* BoxCollider* character1Collider = new BoxCollider(400, 300, new sf::Color(0, 255, 0, 255), 16, 16);
+    character1Collider->GetBoxShape()->setScale(SPRITE_SCALE, SPRITE_SCALE);*/
+
+
+
     //w = tileWall_1_1  q = tileWall_1_2    e =  tileWall_1_3   
 
     //g = tileGround_1_4    f = tileGround_2_4  d = tileGround_3_4
@@ -89,14 +107,14 @@ int main()
         {
             new char[13]{'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e', 'w'},
             new char[13]{'g', 'g', 'd', 'g', 'f', 'g', 'g', 'f', 'd', 'g', 'f', 'd', 'g'},
-            new char[13]{'g', 'g', 'd', 'g', 'g', 'x', 'g', 'f', 'g', 'g', 'f', 'c', 'g'},
-            new char[13]{'g', 'g', 'd', 'g', 'g', 'd', 'g', 'g', 'd', 'g', 'g', 'd', 'g'},
+            new char[13]{'g', 's', 'd', 'g', 'g', 'x', 'g', 'f', 'g', 'g', 'f', 'c', 'g'},
+            new char[13]{'g', 'g', 'd', 'g', 'g', 'd', 'g', 'g', 'd', 's', 'g', 'd', 'g'},
             new char[13]{'z', 'g', 'g', 'g', 'g', 'z', 'g', 'g', 'd', 'g', 'g', 'x', 'g'},
             new char[13]{'g', 'g', 'g', 'g', 'g', 'd', 'g', 'g', 'd', 'g', 'f', 'g', 'g'},
             new char[13]{'g', 'f', 'd', 's', 'f', 'd', 'g', 'f', 'g', 'g', 'f', 'd', 'g'},
-            new char[13]{'g', 'a', 'x', 'g', 'f', 'g', 'g', 'g', 'g', 'g', 'v', 'g', 'g'},
+            new char[13]{'g', 'a', 'x', 'g', 'f', 'g', 'g', 'g', 'g', 's', 'v', 'g', 'g'},
             new char[13]{'g', 'f', 'g', 'g', 'f', 'g', 'g', 'f', 'd', 'g', 'f', 'd', 'g'},
-            new char[13]{'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g'}
+            new char[13]{'g', 's', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g'}
         }
     };
 
@@ -168,9 +186,35 @@ int main()
     BoxCollider* character1Collider = new BoxCollider(400, 300, new sf::Color(0, 255, 0, 255), 16, 16);
     character1Collider->GetBoxShape()->setScale(SPRITE_SCALE, SPRITE_SCALE);
 
+    //physics declaration
+    b2Vec2* gravity{new b2Vec2(0, 0)};
+    b2World* world{new b2World(*gravity)}; 
+
+    //player physics
+
+    b2BodyDef* playerBodyDef{new b2BodyDef()};
+    playerBodyDef->type = b2BodyType::b2_dynamicBody;
+    playerBodyDef->position = *(new b2Vec2(400, 300));
+
+    b2Body* playerBody{world->CreateBody(playerBodyDef)};
+    b2PolygonShape* playerPolygonShape{new b2PolygonShape()};
+    playerPolygonShape->SetAsBox(tileBaseWidth / 2, tileBaseHeight / 2); //la X debe ser la mitad y la Y también debe ser la mitad
+
+    b2FixtureDef* playerFixtureDef{new b2FixtureDef()};
+    playerFixtureDef->shape = playerPolygonShape;
+    playerFixtureDef->density = 1; // cuanto se va resistir a traspasar cosas?
+    playerFixtureDef->friction = 0; // cuanto se va resistir a moverse?
+    playerFixtureDef->restitution = 0; // cuanto va rebotar?
+
+    b2Fixture* playerFixture{playerBody->CreateFixture(playerFixtureDef)};
+
+
     //esto es el loop principal, mientras la ventana este abierta, esto se va ejecutar.
     while (window->isOpen())
     {
+        world->ClearForces();
+        world->Step(1000 / deltaTime, 8, 8);
+
         //mientras se esten ejecutando eventos dentro de la ventana, esto se va repetir eje: teclado, joystick, mouse, etc
         while (window->pollEvent(event))
         {
@@ -217,6 +261,7 @@ int main()
                 character1->GetAnimation(0)->Play(deltaTime);
             }
         }
+        character1->GetSprite()->setPosition(playerBody->GetPosition().x, playerBody->GetPosition().y);
 
         window->clear(*(new sf::Color(150, 100, 0, 255)));//lipiar la pantalla
 
@@ -229,6 +274,8 @@ int main()
         
         window->draw(*character1->GetSprite());
         window->draw(*character1Collider->GetBoxShape());
+        window->draw(*treasureSprite);
+        window->draw(*treasureCollider->GetBoxShape());
         window->display(); //mostrar en pantalla lo que se va dibujar
 
         sf::Time timeElapsed = clock->getElapsedTime();
