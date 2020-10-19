@@ -1,6 +1,8 @@
 #include<iostream>
 #include <SFML/Graphics.hpp>
 #include<box2d/box2d.h>
+#include "Maze.hh"
+#include "Tile.hh"
 
 #include "Inputs.hh"
 #include "Character.hh"
@@ -43,44 +45,6 @@ int main()
     const float tileBaseWidth{16 * SPRITE_SCALE};
     const float tileBaseHeight{16 * SPRITE_SCALE};
 
-    //Tiles
-
-    sf::Sprite* tileWall_1_1{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 1, 16, 16)))};
-    tileWall_1_1->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileWall_1_2{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 2, 16, 16)))};
-    tileWall_1_2->setScale(SPRITE_SCALE, SPRITE_SCALE);
-    
-    sf::Sprite* tileWall_1_3{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 3, 16, 16)))};
-    tileWall_1_3->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_1_4{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 4, 16, 16)))};
-    tileGround_1_4->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_2_4{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 2, 16 * 4, 16, 16)))};
-    tileGround_2_4->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_3_4{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 3, 16 * 4, 16, 16)))};
-    tileGround_3_4->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_1_5{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 5, 16, 16)))};
-    tileGround_1_5->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_2_5{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 2, 16 * 5, 16, 16)))};
-    tileGround_2_5->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_3_5{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 3, 16 * 5, 16, 16)))};
-    tileGround_3_5->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_1_6{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 1, 16 * 6, 16, 16)))};
-    tileGround_1_6->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_2_6{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 2, 16 * 6, 16, 16)))};
-    tileGround_2_6->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
-    sf::Sprite* tileGround_3_6{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 3, 16 * 6, 16, 16)))};
-    tileGround_3_6->setScale(SPRITE_SCALE, SPRITE_SCALE);
-
     //Items
     sf::Sprite* treasureSprite{new sf::Sprite(*tilesTexture3, *(new sf::IntRect(16 * 19, 16 * 19, 16, 16)))};
     treasureSprite->setScale(SPRITE_SCALE, SPRITE_SCALE);
@@ -94,8 +58,6 @@ int main()
 
     treasureCollider->GetBoxShape()->setPosition(treasureSprite->getPosition());
 
-
-
     //w = tileWall_1_1  q = tileWall_1_2    e =  tileWall_1_3   
 
     //g = tileGround_1_4    f = tileGround_2_4  d = tileGround_3_4
@@ -104,73 +66,60 @@ int main()
 
     //x = tileGround_1_6    c = tileGround_2_6  v = tileGround_3_6
 
-    char** tiles 
-    {
-        new char*[10]
-        {
-            new char[13]{'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e', 'w', 'q', 'e', 'w'},
-            new char[13]{'g', 'g', 'd', 'g', 'f', 'g', 'g', 'f', 'd', 'g', 'f', 'd', 'g'},
-            new char[13]{'g', 's', 'd', 'g', 'g', 'x', 'g', 'f', 'g', 'g', 'f', 'c', 'g'},
-            new char[13]{'g', 'g', 'd', 'g', 'g', 'd', 'g', 'g', 'd', 's', 'g', 'd', 'g'},
-            new char[13]{'z', 'g', 'g', 'g', 'g', 'z', 'g', 'g', 'd', 'g', 'g', 'x', 'g'},
-            new char[13]{'g', 'g', 'g', 'g', 'g', 'd', 'g', 'g', 'd', 'g', 'f', 'g', 'g'},
-            new char[13]{'g', 'f', 'd', 's', 'f', 'd', 'g', 'f', 'g', 'g', 'f', 'd', 'g'},
-            new char[13]{'g', 'a', 'x', 'g', 'f', 'g', 'g', 'g', 'g', 's', 'v', 'g', 'g'},
-            new char[13]{'g', 'f', 'g', 'g', 'f', 'g', 'g', 'f', 'd', 'g', 'f', 'd', 'g'},
-            new char[13]{'g', 's', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g', 'f', 'd', 'g'}
-        }
-    };
+    int M{10}, N{13};
 
-    std::vector<sf::Sprite> maze;
+    Maze* level1{new Maze(10, 13, "assets/mazes/maze1/maze.txt", tilesTexture3, 16)};
 
-    for(int i = 0; i < 10; i++)
+    std::vector<Tile> tiles;
+
+    for(int i{}; i < M; i++)
     {
-        for(int j = 0; j < 13; j++)
+        for(int j{}; j < N; j++)
         {
-            char& tile = *(*(tiles + i) + j);
+            char& tile{level1->GetTiles()[i][j]};
 
             switch (tile)
             {
                 case 'w':
-                    maze.push_back(*tileWall_1_1);
+                    tiles.push_back(*(new Tile(16 * 1, 16 * 1, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'q':
-                    maze.push_back(*tileWall_1_2);
+                    tiles.push_back(*(new Tile(16 * 1, 16 * 2, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'e':
-                    maze.push_back(*tileWall_1_3);
+                    tiles.push_back(*(new Tile(16 * 1, 16 * 3, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'g':
-                    maze.push_back(*tileGround_1_4);
+                    tiles.push_back(*(new Tile(16 * 1, 16 * 4, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'f':
-                    maze.push_back(*tileGround_2_4);
+                    tiles.push_back(*(new Tile(16 * 2, 16 * 4, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'd':
-                    maze.push_back(*tileGround_3_4);
+                    tiles.push_back(*(new Tile(16 * 3, 16 * 4, SPRITE_SCALE, 16, tilesTexture3)));
                     break;    
                 case 'a':
-                    maze.push_back(*tileGround_1_5);
+                    tiles.push_back(*(new Tile(16 * 1, 16 * 5, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 's':
-                    maze.push_back(*tileGround_2_5);
+                    tiles.push_back(*(new Tile(16 * 2, 16 * 5, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'z':
-                    maze.push_back(*tileGround_3_5);
+                    tiles.push_back(*(new Tile(16 * 3, 16 * 5, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'x':
-                    maze.push_back(*tileGround_1_6);
+                    tiles.push_back(*(new Tile(16 * 1, 16 * 6, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'c':
-                    maze.push_back(*tileGround_2_6);
+                    tiles.push_back(*(new Tile(16 * 2, 16 * 6, SPRITE_SCALE, 16, tilesTexture3)));
                     break;
                 case 'v':
-                    maze.push_back(*tileGround_3_6);
+                    tiles.push_back(*(new Tile(16 * 3, 16 * 6, SPRITE_SCALE, 16, tilesTexture3)));
                     break;              
                 default:
                     break;
             }
-            maze.back().move(tileBaseWidth * j, tileBaseHeight * i);
+            tiles.back().Move(tileBaseWidth * j, tileBaseHeight * i);
         }
     }
 
@@ -204,7 +153,6 @@ int main()
    
         //player sigue la posicion del cuerpo de física}
         treasureCollider->UpdatePhysics();
-
 
         if(sf::Joystick::isConnected(0))
         {
@@ -242,11 +190,11 @@ int main()
 
         window->clear(*(new sf::Color(150, 100, 0, 255)));//lipiar la pantalla
 
-        for(auto& mazeTile : maze)
+        for(auto& tileMaze : tiles)
         {
-            window->draw(mazeTile);
+            window->draw(*tileMaze.GetSprite());
         }
-
+        
         character1->Update();
         window->draw(*treasureSprite);
         window->draw(*treasureCollider->GetBoxShape());
@@ -258,8 +206,6 @@ int main()
         world->Step(1.f / 100 * deltaTime, 8, 8);
         clock->restart();
         
-        //std::cout << playerBody->GetPosition().x << " " << playerBody->GetPosition().y << std::endl; 
-
         //std::cout << "delta time: " << deltaTime << std::endl;
 
         delete keyboardAxis;
