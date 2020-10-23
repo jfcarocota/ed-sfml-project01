@@ -1,6 +1,6 @@
 #include "Maze.hh"
 
-Maze::Maze(unsigned int M, unsigned int N, const char* tilesDirectory, sf::Texture* texture, float cropSize)
+Maze::Maze(unsigned int M, unsigned int N, const char* tilesDirectory, sf::Texture*& texture, float cropSize)
 {
     this->M = M;
     this->N = N;
@@ -43,5 +43,21 @@ char** Maze::GetTiles() const
 
 void Maze::Generate()
 {
-    
+    for(int i{}; i < M; i++)
+    {
+        for(int j{}; j < N; j++)
+        {
+            //sprites.
+        }
+    }
+}
+
+unsigned int Maze::GetCols() const
+{
+    return N;
+}
+
+unsigned int Maze::GetRows() const
+{
+    return M;
 }

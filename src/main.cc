@@ -1,8 +1,7 @@
 #include<iostream>
 #include <SFML/Graphics.hpp>
 #include<box2d/box2d.h>
-#include "Maze.hh"
-#include "Tile.hh"
+#include "Levels.hh"
 
 #include "Inputs.hh"
 #include "Character.hh"
@@ -68,58 +67,58 @@ int main()
 
     int M{10}, N{13};
 
-    Maze* level1{new Maze(10, 13, "assets/mazes/maze1/maze.txt", tilesTexture3, 16)};
+    Maze* maze{new Maze(10, 13, "assets/mazes/maze1/maze.txt", tilesTexture3, 16)};
 
-    std::vector<Tile> tiles;
+    std::vector<Tile*> tiles;
 
     for(int i{}; i < M; i++)
     {
         for(int j{}; j < N; j++)
         {
-            char& tile{level1->GetTiles()[i][j]};
+            char& tile{maze->GetTiles()[i][j]};
 
             switch (tile)
             {
                 case 'w':
-                    tiles.push_back(*(new Tile(16 * 1, 16 * 1, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 1, 16 * 1, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'q':
-                    tiles.push_back(*(new Tile(16 * 1, 16 * 2, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 1, 16 * 2, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'e':
-                    tiles.push_back(*(new Tile(16 * 1, 16 * 3, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 1, 16 * 3, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'g':
-                    tiles.push_back(*(new Tile(16 * 1, 16 * 4, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 1, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'f':
-                    tiles.push_back(*(new Tile(16 * 2, 16 * 4, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 2, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'd':
-                    tiles.push_back(*(new Tile(16 * 3, 16 * 4, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 3, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
                     break;    
                 case 'a':
-                    tiles.push_back(*(new Tile(16 * 1, 16 * 5, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 1, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 's':
-                    tiles.push_back(*(new Tile(16 * 2, 16 * 5, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 2, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'z':
-                    tiles.push_back(*(new Tile(16 * 3, 16 * 5, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 3, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'x':
-                    tiles.push_back(*(new Tile(16 * 1, 16 * 6, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 1, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'c':
-                    tiles.push_back(*(new Tile(16 * 2, 16 * 6, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 2, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
                     break;
                 case 'v':
-                    tiles.push_back(*(new Tile(16 * 3, 16 * 6, SPRITE_SCALE, 16, tilesTexture3)));
+                    tiles.push_back(new Tile(16 * 3, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
                     break;              
                 default:
                     break;
             }
-            tiles.back().Move(tileBaseWidth * j, tileBaseHeight * i);
+            tiles.back()->Move(tileBaseWidth * j, tileBaseHeight * i);
         }
     }
 
@@ -192,9 +191,9 @@ int main()
 
         for(auto& tileMaze : tiles)
         {
-            window->draw(*tileMaze.GetSprite());
+            window->draw(*tileMaze->GetSprite());
         }
-        
+
         character1->Update();
         window->draw(*treasureSprite);
         window->draw(*treasureCollider->GetBoxShape());
