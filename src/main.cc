@@ -1,10 +1,10 @@
 #include<iostream>
 #include <SFML/Graphics.hpp>
 #include<box2d/box2d.h>
-#include "Levels.hh"
 
 #include "Inputs.hh"
 #include "Character.hh"
+#include "Maze.hh"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -57,70 +57,10 @@ int main()
 
     treasureCollider->GetBoxShape()->setPosition(treasureSprite->getPosition());
 
-    //w = tileWall_1_1  q = tileWall_1_2    e =  tileWall_1_3   
-
-    //g = tileGround_1_4    f = tileGround_2_4  d = tileGround_3_4
-
-    //a = tileGround_1_5    s = tileGround_2_5  z = tileGround_3_5
-
-    //x = tileGround_1_6    c = tileGround_2_6  v = tileGround_3_6
-
     int M{10}, N{13};
 
-    Maze* maze{new Maze(10, 13, "assets/mazes/maze1/maze.txt", tilesTexture3, 16)};
+    Maze* maze{new Maze(10, 13, "assets/mazes/maze1/maze.txt", tilesTexture3, 16, SPRITE_SCALE)};
 
-    std::vector<Tile*> tiles;
-
-    for(int i{}; i < M; i++)
-    {
-        for(int j{}; j < N; j++)
-        {
-            char& tile{maze->GetTiles()[i][j]};
-
-            switch (tile)
-            {
-                case 'w':
-                    tiles.push_back(new Tile(16 * 1, 16 * 1, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'q':
-                    tiles.push_back(new Tile(16 * 1, 16 * 2, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'e':
-                    tiles.push_back(new Tile(16 * 1, 16 * 3, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'g':
-                    tiles.push_back(new Tile(16 * 1, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'f':
-                    tiles.push_back(new Tile(16 * 2, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'd':
-                    tiles.push_back(new Tile(16 * 3, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
-                    break;    
-                case 'a':
-                    tiles.push_back(new Tile(16 * 1, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 's':
-                    tiles.push_back(new Tile(16 * 2, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'z':
-                    tiles.push_back(new Tile(16 * 3, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'x':
-                    tiles.push_back(new Tile(16 * 1, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'c':
-                    tiles.push_back(new Tile(16 * 2, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'v':
-                    tiles.push_back(new Tile(16 * 3, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
-                    break;              
-                default:
-                    break;
-            }
-            tiles.back()->Move(tileBaseWidth * j, tileBaseHeight * i);
-        }
-    }
 
     //Main player
     Character* character1{new Character(tilesTexture2, 16 * 1, 16 * 5, 16, 16, SPRITE_SCALE, SPRITE_SCALE, world, window)};
@@ -189,7 +129,7 @@ int main()
 
         window->clear(*(new sf::Color(150, 100, 0, 255)));//lipiar la pantalla
 
-        for(auto& tileMaze : tiles)
+        for(auto& tileMaze : maze->GetMazeTiles())
         {
             window->draw(*tileMaze->GetSprite());
         }

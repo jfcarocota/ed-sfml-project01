@@ -11,10 +11,11 @@ class Maze
         const char* tileDirectory;
         std::ifstream* reader{new std::ifstream()};
         sf::Texture* texture;
-        std::vector<sf::Sprite> sprites;
+        std::vector<Tile*> mazeTiles;
         float cropSize; 
+        float spriteScale;
     public:
-        Maze(unsigned int, unsigned int, const char*, sf::Texture*&, float);
+        Maze(unsigned int, unsigned int, const char*, sf::Texture*&, float, float);
         ~Maze();
         void AllocateMemory();
         void FillMaze();
@@ -22,4 +23,5 @@ class Maze
         void Generate();
         unsigned int GetRows() const;
         unsigned int GetCols() const;
+        std::vector<Tile*> GetMazeTiles() const;
 };

@@ -19,7 +19,7 @@ Levels::Levels(/* args */)
 {   
     textures.push_back(new sf::Texture());
     textures.back()->loadFromFile("assets/sprites/tiles3.png");
-    mazes.push_back(new Maze(10, 13, "assets/mazes/maze1/maze.txt", textures.at(0), 16));
+    //mazes.push_back(new Maze(10, 13, "assets/mazes/maze1/maze.txt", textures.at(0), 16));
 }
 
 Levels::~Levels()
