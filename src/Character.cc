@@ -1,24 +1,25 @@
 #include "Character.hh"
 
 Character::Character(sf::Texture*& texture, float cropPosX, float cropPosY, float cropWidth, 
-float cropHeight, float scaleX, float scaleY, b2World*& world, sf::RenderWindow*& window)
+float cropHeight, float scaleX, float scaleY, b2World*& world, sf::RenderWindow*& window) : 
+GameObject(texture, cropPosX, cropPosY,cropWidth, cropHeight, scaleX, scaleY, world, window)
 {
-    this->texture = texture;
+    /*this->texture = texture;
     this->cropPosX = cropPosX;
     this->cropPosY = cropPosY;
     this->cropWidth = cropWidth;
     this->cropHeight = cropHeight;
     this->scaleX = scaleX;
     this->scaleY = scaleY;
-    this->window = window;
+    this->window = window;*/
 
-    tileBaseWidth = cropWidth * scaleX;
-    tileBaseHeight = cropHeight * scaleY;
+    //tileBaseWidth = cropWidth * scaleX;
+    //tileBaseHeight = cropHeight * scaleY;
 
-    InitSprite(world);
+    //InitSprite(world);
 }
 
-void Character::InitSprite(b2World*& world)
+/*void Character::InitSprite(b2World*& world)
 {
     sprite = new sf::Sprite(*texture, *(new sf::IntRect(cropPosX, cropPosY, cropWidth, cropHeight)));
     sprite->setScale(*(new sf::Vector2f(scaleX, scaleY)));
@@ -27,14 +28,14 @@ void Character::InitSprite(b2World*& world)
     new Rigidbody(world, b2BodyType::b2_dynamicBody, new b2Vec2(sprite->getPosition().x, sprite->getPosition().y), tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
     sprite);
     boxCollider->GetBoxShape()->setScale(scaleX, scaleY);
-}
+}*/
 
 void Character::Move(b2Vec2* direction)
 {
     boxCollider->Move(direction);
 }
 
-sf::Sprite* Character::GetSprite() 
+/*sf::Sprite* Character::GetSprite() 
 {
     return sprite;
 }
@@ -54,7 +55,7 @@ void Character::Update()
 BoxCollider* Character::GetCollider() const
 {
     return boxCollider;
-}
+}*/
 
 void Character::FlipSpriteX(float x)
 {
