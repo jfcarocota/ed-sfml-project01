@@ -4,7 +4,7 @@ Character::Character(sf::Texture*& texture, float cropPosX, float cropPosY, floa
 float cropHeight, float scaleX, float scaleY, b2Vec2* startPosition, b2BodyType bodyType, b2World*& world, sf::RenderWindow*& window) : 
 GameObject(texture, cropPosX, cropPosY,cropWidth, cropHeight, scaleX, scaleY, startPosition, bodyType, world, window)
 {
-
+    
 }
 
 void Character::Move(b2Vec2* direction)

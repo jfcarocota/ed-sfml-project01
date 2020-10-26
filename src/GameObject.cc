@@ -32,6 +32,7 @@ void GameObject::InitSprite(b2World*& world, b2BodyType bodyType)
     new Rigidbody(world, bodyType, startPosition, tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
     sprite);
     boxCollider->GetBoxShape()->setScale(scaleX, scaleY);
+    GetCollider()->SetUserData((void*) this);
 }
 
 sf::Sprite* GameObject::GetSprite() 
@@ -55,4 +56,14 @@ void GameObject::Update()
     boxCollider->UpdatePhysics();
     window->draw(*sprite);
     window->draw(*boxCollider->GetBoxShape());
+}
+
+void GameObject::SetTagName(const char* tagName)
+{
+    this->tagName = tagName;
+}
+
+const char* GameObject::GetTagName() const
+{
+    return tagName;
 }

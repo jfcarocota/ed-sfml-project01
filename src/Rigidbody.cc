@@ -36,3 +36,8 @@ void Rigidbody::SetPosition(b2Vec2* position)
 {
     bodyDef->position.Set(position->x, position->y);
 }
+
+void Rigidbody::SetUserData(void* data)
+{
+    body->SetUserData(data);
+}

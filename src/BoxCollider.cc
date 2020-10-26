@@ -49,3 +49,8 @@ void BoxCollider::Move(b2Vec2* direction)
 {
     rigidbody->Translate(direction);
 }
+
+void BoxCollider::SetUserData(void* data)
+{
+    rigidbody->SetUserData(data);
+}

@@ -52,12 +52,12 @@ int main()
 
     Maze* maze{new Maze(10, 13, "assets/mazes/maze1/maze.txt", tilesTexture3, 16, SPRITE_SCALE)};
 
-    GameObject* treasure{new GameObject(tilesTexture3, 16 * 19, 16 * 19, 16, 16, SPRITE_SCALE, SPRITE_SCALE,
-    new b2Vec2(400, 400), b2BodyType::b2_staticBody, world, window)};
+    //std::cout << treasure->GetTagName();
 
     //Main player
     Character* character1{new Character(tilesTexture2, 16 * 1, 16 * 5, 16, 16, SPRITE_SCALE, SPRITE_SCALE, 
     new b2Vec2(300, 300), b2BodyType::b2_dynamicBody, world, window)};
+    character1->SetTagName("player");
     character1->SetAnimations(
         new Animation*[2]
         {
@@ -66,8 +66,13 @@ int main()
         }
     );
 
+    GameObject* treasure{new GameObject(tilesTexture3, 16 * 19, 16 * 19, 16, 16, SPRITE_SCALE, SPRITE_SCALE,
+    new b2Vec2(400, 400), b2BodyType::b2_staticBody, world, window)};
+    treasure->SetTagName("treasure");
+
     Collectable* coin{new Collectable(tilesTexture3, 16 * 18, 16 * 17, 8, 8, SPRITE_SCALE, SPRITE_SCALE, 
     new b2Vec2(400, 300), b2BodyType::b2_staticBody,world, window)};
+    coin->SetTagName("coin");
 
     //esto es el loop principal, mientras la ventana este abierta, esto se va ejecutar.
     while (window->isOpen())

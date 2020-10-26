@@ -20,13 +20,10 @@ class BoxCollider
         ~BoxCollider();
 
         sf::RectangleShape* GetBoxShape() const;
-
         void UpdatePhysics();
-
         void Move(b2Vec2*);
-
         b2Vec2 GetBodyPosition() const;
-
         void SetBodyPosition(b2Vec2*);
+        void SetUserData(void*);
 };
 
