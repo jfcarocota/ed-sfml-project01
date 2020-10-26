@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hh"
 #include "GameObject.hh"
+#pragma once
 
 class Character : public GameObject
 {

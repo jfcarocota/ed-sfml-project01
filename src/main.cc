@@ -5,6 +5,7 @@
 #include "Inputs.hh"
 #include "Character.hh"
 #include "Maze.hh"
+#include "Collectable.hh"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -73,6 +74,8 @@ int main()
     );
 
     character1->SetPosition(400, 300);
+
+    Collectable* coin{new Collectable(tilesTexture3, 16 * 18, 16 * 18, 16, 16, SPRITE_SCALE, SPRITE_SCALE, world, window)};
 
     //esto es el loop principal, mientras la ventana este abierta, esto se va ejecutar.
     while (window->isOpen())

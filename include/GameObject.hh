@@ -1,6 +1,6 @@
-#pragma onece
 #include<SFML/Graphics.hpp>
 #include "BoxCollider.hh"
+#pragma once
 
 class GameObject
 {
