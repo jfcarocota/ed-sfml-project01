@@ -6,6 +6,7 @@
 #include "Character.hh"
 #include "Maze.hh"
 #include "Collectable.hh"
+#include "ContactListener.hh"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -27,6 +28,8 @@ int main()
     //physics declaration
     b2Vec2* gravity{new b2Vec2(0.f, 0.f)};
     b2World* world{new b2World(*gravity)}; 
+    ContactListener* contactListener{new ContactListener()};
+    world->SetContactListener(contactListener);
 
     sf::Clock* clock{new sf::Clock()};
     float deltaTime{};
