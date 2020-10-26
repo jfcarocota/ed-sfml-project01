@@ -10,7 +10,7 @@ class Character : public GameObject
         Animation** animations;
 
     public:
-        Character(sf::Texture*&, float, float, float, float, float, float, b2Vec2*, b2World*&, sf::RenderWindow*&);
+        Character(sf::Texture*&, float, float, float, float, float, float, b2Vec2*, b2BodyType, b2World*&, sf::RenderWindow*&);
         ~Character();
         void FlipSpriteX(float);
         void SetAnimations(Animation**);

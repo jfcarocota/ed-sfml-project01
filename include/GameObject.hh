@@ -19,9 +19,9 @@ class GameObject
         sf::RenderWindow* window;
         b2Vec2* startPosition;
 
-        void InitSprite(b2World*&);
+        void InitSprite(b2World*&, b2BodyType);
     public:
-        GameObject(sf::Texture*&, float, float, float, float, float, float, b2Vec2*, b2World*&, sf::RenderWindow*&);
+        GameObject(sf::Texture*&, float, float, float, float, float, float, b2Vec2*, b2BodyType, b2World*&, sf::RenderWindow*&);
         ~GameObject();
         sf::Sprite* GetSprite();
         void SetPosition(float, float);

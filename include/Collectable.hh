@@ -7,7 +7,7 @@ class Collectable : public GameObject
     private:
 
     public:
-        Collectable(sf::Texture*&, float, float, float, float, float, float, b2Vec2*, b2World*&, sf::RenderWindow*&);
+        Collectable(sf::Texture*&, float, float, float, float, float, float, b2Vec2*, b2BodyType, b2World*&, sf::RenderWindow*&);
         ~Collectable();
 };
 

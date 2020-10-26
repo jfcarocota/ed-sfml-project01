@@ -1,7 +1,7 @@
 #include "GameObject.hh"
 
 GameObject::GameObject(sf::Texture*& texture, float cropPosX, float cropPosY, float cropWidth, 
-float cropHeight, float scaleX, float scaleY, b2Vec2* startPosition, b2World*& world, sf::RenderWindow*& window)
+float cropHeight, float scaleX, float scaleY, b2Vec2* startPosition, b2BodyType bodyType, b2World*& world, sf::RenderWindow*& window)
 {
     this->texture = texture;
     this->cropPosX = cropPosX;
@@ -16,20 +16,20 @@ float cropHeight, float scaleX, float scaleY, b2Vec2* startPosition, b2World*& w
     tileBaseWidth = cropWidth * scaleX;
     tileBaseHeight = cropHeight * scaleY;
 
-    InitSprite(world);
+    InitSprite(world, bodyType);
 }
 
 GameObject::~GameObject()
 {
 }
 
-void GameObject::InitSprite(b2World*& world)
+void GameObject::InitSprite(b2World*& world, b2BodyType bodyType)
 {
     sprite = new sf::Sprite(*texture, *(new sf::IntRect(cropPosX, cropPosY, cropWidth, cropHeight)));
     sprite->setScale(*(new sf::Vector2f(scaleX, scaleY)));
 
     boxCollider = new BoxCollider(sprite->getPosition().x, sprite->getPosition().y, new sf::Color(0, 255, 0, 255), cropWidth, cropHeight,
-    new Rigidbody(world, b2BodyType::b2_dynamicBody, startPosition, tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
+    new Rigidbody(world, bodyType, startPosition, tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
     sprite);
     boxCollider->GetBoxShape()->setScale(scaleX, scaleY);
 }
