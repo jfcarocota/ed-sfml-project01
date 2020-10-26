@@ -17,10 +17,11 @@ class GameObject
         float tileBaseWidth;
         float tileBaseHeight;
         sf::RenderWindow* window;
+        b2Vec2* startPosition;
 
         void InitSprite(b2World*&);
     public:
-        GameObject(sf::Texture*&, float, float, float, float, float, float, b2World*&, sf::RenderWindow*&);
+        GameObject(sf::Texture*&, float, float, float, float, float, float, b2Vec2*, b2World*&, sf::RenderWindow*&);
         ~GameObject();
         sf::Sprite* GetSprite();
         void SetPosition(float, float);

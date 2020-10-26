@@ -64,7 +64,7 @@ int main()
 
 
     //Main player
-    Character* character1{new Character(tilesTexture2, 16 * 1, 16 * 5, 16, 16, SPRITE_SCALE, SPRITE_SCALE, world, window)};
+    Character* character1{new Character(tilesTexture2, 16 * 1, 16 * 5, 16, 16, SPRITE_SCALE, SPRITE_SCALE, new b2Vec2(300, 300), world, window)};
     character1->SetAnimations(
         new Animation*[2]
         {
@@ -73,9 +73,9 @@ int main()
         }
     );
 
-    character1->SetPosition(400, 300);
+    //character1->SetPosition(400, 300);
 
-    Collectable* coin{new Collectable(tilesTexture3, 16 * 18, 16 * 17, 16, 16, SPRITE_SCALE, SPRITE_SCALE, world, window)};
+    Collectable* coin{new Collectable(tilesTexture3, 16 * 18, 16 * 17, 8, 8, SPRITE_SCALE, SPRITE_SCALE, new b2Vec2(400, 300), world, window)};
 
     //esto es el loop principal, mientras la ventana este abierta, esto se va ejecutar.
     while (window->isOpen())

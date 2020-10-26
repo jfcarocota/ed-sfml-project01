@@ -1,7 +1,7 @@
 #include "GameObject.hh"
 
 GameObject::GameObject(sf::Texture*& texture, float cropPosX, float cropPosY, float cropWidth, 
-float cropHeight, float scaleX, float scaleY, b2World*& world, sf::RenderWindow*& window)
+float cropHeight, float scaleX, float scaleY, b2Vec2* startPosition, b2World*& world, sf::RenderWindow*& window)
 {
     this->texture = texture;
     this->cropPosX = cropPosX;
@@ -11,6 +11,7 @@ float cropHeight, float scaleX, float scaleY, b2World*& world, sf::RenderWindow*
     this->scaleX = scaleX;
     this->scaleY = scaleY;
     this->window = window;
+    this->startPosition = startPosition;
 
     tileBaseWidth = cropWidth * scaleX;
     tileBaseHeight = cropHeight * scaleY;
@@ -28,7 +29,7 @@ void GameObject::InitSprite(b2World*& world)
     sprite->setScale(*(new sf::Vector2f(scaleX, scaleY)));
 
     boxCollider = new BoxCollider(sprite->getPosition().x, sprite->getPosition().y, new sf::Color(0, 255, 0, 255), cropWidth, cropHeight,
-    new Rigidbody(world, b2BodyType::b2_dynamicBody, new b2Vec2(300, 300), tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
+    new Rigidbody(world, b2BodyType::b2_dynamicBody, startPosition, tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
     sprite);
     boxCollider->GetBoxShape()->setScale(scaleX, scaleY);
 }
