@@ -26,3 +26,8 @@ b2Body* Rigidbody::GetBody() const
 {
     return body;
 }
+
+void Rigidbody::Translate(b2Vec2* direction)
+{
+    body->SetLinearVelocity(*direction);
+}

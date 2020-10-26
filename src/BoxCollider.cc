@@ -42,5 +42,5 @@ void BoxCollider::UpdatePhysics()
 
 void BoxCollider::Move(b2Vec2* direction)
 {
-    rigidbody->GetBody()->SetLinearVelocity(*direction);
+    rigidbody->Translate(direction);
 }

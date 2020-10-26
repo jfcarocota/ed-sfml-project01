@@ -75,7 +75,7 @@ int main()
 
     character1->SetPosition(400, 300);
 
-    Collectable* coin{new Collectable(tilesTexture3, 16 * 18, 16 * 18, 16, 16, SPRITE_SCALE, SPRITE_SCALE, world, window)};
+    Collectable* coin{new Collectable(tilesTexture3, 16 * 18, 16 * 17, 16, 16, SPRITE_SCALE, SPRITE_SCALE, world, window)};
 
     //esto es el loop principal, mientras la ventana este abierta, esto se va ejecutar.
     while (window->isOpen())
@@ -136,6 +136,8 @@ int main()
         {
             window->draw(*tileMaze->GetSprite());
         }
+
+        coin->Update();
 
         character1->Update();
         window->draw(*treasureSprite);
