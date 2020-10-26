@@ -14,4 +14,5 @@ class Rigidbody
         b2Body* GetBody() const;
         void SetPosition(float, float);
         void Translate(b2Vec2*);
+        void SetPosition(b2Vec2*);
 };

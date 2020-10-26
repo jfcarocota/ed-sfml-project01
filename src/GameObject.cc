@@ -28,7 +28,7 @@ void GameObject::InitSprite(b2World*& world)
     sprite->setScale(*(new sf::Vector2f(scaleX, scaleY)));
 
     boxCollider = new BoxCollider(sprite->getPosition().x, sprite->getPosition().y, new sf::Color(0, 255, 0, 255), cropWidth, cropHeight,
-    new Rigidbody(world, b2BodyType::b2_dynamicBody, new b2Vec2(sprite->getPosition().x, sprite->getPosition().y), tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
+    new Rigidbody(world, b2BodyType::b2_dynamicBody, new b2Vec2(300, 300), tileBaseWidth / 2, tileBaseHeight / 2, 1, 0, 0),
     sprite);
     boxCollider->GetBoxShape()->setScale(scaleX, scaleY);
 }
@@ -41,6 +41,7 @@ sf::Sprite* GameObject::GetSprite()
 void GameObject::SetPosition(float posX, float posY)
 {
     sprite->setPosition(posX, posY);
+    //boxCollider->SetBodyPosition(new b2Vec2(posX, posY));
 }
 
 BoxCollider* GameObject::GetCollider() const

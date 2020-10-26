@@ -31,3 +31,8 @@ void Rigidbody::Translate(b2Vec2* direction)
 {
     body->SetLinearVelocity(*direction);
 }
+
+void Rigidbody::SetPosition(b2Vec2* position)
+{
+    bodyDef->position.Set(position->x, position->y);
+}

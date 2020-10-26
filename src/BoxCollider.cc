@@ -34,6 +34,11 @@ b2Vec2 BoxCollider::GetBodyPosition() const
     return rigidbody->GetBody()->GetPosition();
 }
 
+void BoxCollider::SetBodyPosition(b2Vec2* position)
+{
+    rigidbody->SetPosition(position);
+}
+
 void BoxCollider::UpdatePhysics()
 {
     boxShape->setPosition(GetBodyPosition().x, GetBodyPosition().y);
