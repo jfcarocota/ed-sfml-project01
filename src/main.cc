@@ -60,72 +60,8 @@ int main()
 
     treasureCollider->GetBoxShape()->setPosition(treasureSprite->getPosition());
 
-
-    //w = tileWall_1_1  q = tileWall_1_2    e =  tileWall_1_3   
-
-    //g = tileGround_1_4    f = tileGround_2_4  d = tileGround_3_4
-
-    //a = tileGround_1_5    s = tileGround_2_5  z = tileGround_3_5
-
-    //x = tileGround_1_6    c = tileGround_2_6  v = tileGround_3_6
-
     unsigned int N{10}, M{13};
-    Maze* maze1{new Maze(N, M, "assets/mazes/maze1.txt")};
-
-    std::vector<Tile*>* maze{new std::vector<Tile*>()};
-
-    for(int i = 0; i < N; i++)
-    {
-        for(int j = 0; j < M; j++)
-        {
-
-            char& tile{maze1->GetTiles()[i][j]};
-
-            switch (tile)
-            {
-                case 'w':
-                    //maze.push_back(*tileWall_1_1);
-                    maze->push_back(new Tile(16 * 1, 16 * 1, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'q':
-                    maze->push_back(new Tile(16 * 1, 16 * 2, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'e':
-                    maze->push_back(new Tile(16 * 1, 16 * 3, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'g':
-                    maze->push_back(new Tile(16 * 1, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'f':
-                    maze->push_back(new Tile(16 * 2, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'd':
-                    maze->push_back(new Tile(16 * 3, 16 * 4, SPRITE_SCALE, 16, tilesTexture3));
-                    break;    
-                case 'a':
-                    maze->push_back(new Tile(16 * 1, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 's':
-                    maze->push_back(new Tile(16 * 2, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'z':
-                    maze->push_back(new Tile(16 * 3, 16 * 5, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'x':
-                    maze->push_back(new Tile(16 * 1, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'c':
-                    maze->push_back(new Tile(16 * 2, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
-                    break;
-                case 'v':
-                    maze->push_back(new Tile(16 * 3, 16 * 6, SPRITE_SCALE, 16, tilesTexture3));
-                    break;              
-                default:
-                    break;
-            }
-            maze->back()->Move(tileBaseWidth * j, tileBaseHeight * i);
-        }
-    }
+    Maze* maze1{new Maze(N, M, SPRITE_SCALE, 16, tilesTexture3, "assets/mazes/maze1.txt")};
 
     //Main player
     Character* character1{new Character(tilesTexture2, 16 * 1, 16 * 5, 16, 16, SPRITE_SCALE, SPRITE_SCALE, world, window)};
@@ -195,7 +131,7 @@ int main()
 
         window->clear(*(new sf::Color(150, 100, 0, 255)));//lipiar la pantalla
 
-        for(auto& mazeTile : *maze)
+        for(auto& mazeTile : *maze1->GetContainer())
         {
             window->draw(*mazeTile->GetSprite());
         }
@@ -211,8 +147,6 @@ int main()
         world->Step(1.f / 100 * deltaTime, 8, 8);
         clock->restart();
         
-        //std::cout << playerBody->GetPosition().x << " " << playerBody->GetPosition().y << std::endl; 
-
         //std::cout << "delta time: " << deltaTime << std::endl;
 
         delete keyboardAxis;
